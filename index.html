@@ -77,39 +77,49 @@ header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
 }
 .card:hover { transform: translateY(-2px); }
 
-/* --- PULSANTI SEZIONI --- */
+/* pulsanti nelle sezioni: assoluti */
 .card.section .controls {
-  position: absolute; /* in alto a destra */
-  top: 10px;
+  position: absolute;
+  bottom: 10px;
   right: 10px;
   display: flex;
   gap: 5px;
-  flex-wrap: nowrap; /* non andare a capo */
 }
 
-/* riduci dimensione dei pulsanti solo per le sezioni su mobile */
-@media (max-width: 600px) {
-  .card.section .controls button {
-    padding: 4px 6px;
-    font-size: 0.75rem;
-  }
+/* pulsanti negli esercizi: in fondo alla card */
+.exercise .controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: auto; /* spinge i pulsanti in fondo */
+  padding-top: 10px;
+  border-top: 1px solid #eee;
 }
 
-/* --- PULSANTI ESERCIZI --- */
+/* media query mobile */
 @media (max-width: 600px) {
-  .exercise .controls {
-    position: static !important; /* rimane in fondo alla card */
+  .exercise .controls,
+  .card.section .controls {
+    position: static !important;
+    display: flex !important;
+    flex-direction: row !important;
     flex-wrap: wrap !important;
     justify-content: flex-start !important;
     margin-top: 8px;
-    gap: 5px;
+    gap: 5px; /* ridotto per mobile */
   }
-  .exercise .controls button {
-    flex: 1 1 auto;
-    min-width: 50px;
+
+  .exercise .controls button,
+  .card.section .controls button {
+    flex: 0 1 auto; /* non si espandono troppo */
+    min-width: 0;   /* rimuove il vincolo */
+  }
+
+    /* riduce le icone solo nelle sezioni */
+  .card.section .controls button i {
+    font-size: 0.75rem; /* icone più piccole */
   }
 }
-
 
 
 
@@ -178,7 +188,7 @@ header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
 - 'Note', utile a segnare appunti sul tuo esercizio.<br>
 - Se modifichi il peso e salvi, risulterà il progressivo.<br><br>
 Mi dispiace se i tuoi dati sono andati persi.<br>
-Nun ci scassare a minchia e allenati ❤️ ciao
+Nun ci scassare a minchia e allenati ❤️
 </div>
 
 <div class="container">
