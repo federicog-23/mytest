@@ -77,25 +77,13 @@ header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
 }
 .card:hover { transform: translateY(-2px); }
 
-/* pulsanti nelle sezioni: piccoli e in alto a destra */
+/* pulsanti nelle sezioni: assoluti */
 .card.section .controls {
   position: absolute;
-  top: 10px;
+  bottom: 10px;
   right: 10px;
   display: flex;
-  gap: 4px;
-}
-
-/* pulsanti delle sezioni: dimensioni e colore del tasto modifica */
-.card.section .controls button {
-  padding: 4px 6px;
-  font-size: 0.75rem;    /* più piccoli */
-}
-
-/* tasto modifica arancione solo nelle sezioni */
-.card.section .controls button.edit {
-  background: var(--edit-color);
-  color: white;
+  gap: 5px;
 }
 
 /* pulsanti negli esercizi: in fondo alla card */
@@ -103,34 +91,35 @@ header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
   display: flex;
   justify-content: flex-end;
   gap: 8px;
-  margin-top: auto; 
+  margin-top: auto; /* spinge i pulsanti in fondo */
   padding-top: 10px;
   border-top: 1px solid #eee;
 }
 
 /* media query mobile */
 @media (max-width: 600px) {
+  .exercise .controls,
   .card.section .controls {
     position: static !important;
+    display: flex !important;
+    flex-direction: row !important;
     flex-wrap: wrap !important;
-    gap: 4px;
+    justify-content: flex-start !important;
+    margin-top: 8px;
+    gap: 5px; /* ridotto per mobile */
   }
 
+  .exercise .controls button,
   .card.section .controls button {
-    flex: 0 1 auto;
-    min-width: 0;
-    font-size: 0.7rem;  /* ancora più piccolo su mobile */
-    padding: 3px 5px;
+    flex: 0 1 auto; /* non si espandono troppo */
+    min-width: 0;   /* rimuove il vincolo */
   }
 
-  .exercise .controls,
-  .exercise .controls button {
-    flex: 0 1 auto;
-    min-width: 0;
+    /* riduce le icone solo nelle sezioni */
+  .card.section .controls button i {
+    font-size: 0.75rem; /* icone più piccole */
   }
 }
-
-
 
 
 
@@ -196,9 +185,10 @@ header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
 - Cliccando in alto a sinistra sulla matita, puoi modificare il colore della barra superiore.<br>
 - Cliccando in alto a destra sul timer, puoi impostare il timer durante l'allenamento.<br>
 - 'Crea sezione' utile a distinguere i gruppi muscolari.<br>
-- 'Note', utile a segnare appunti sul tuo esercizio.<br><br>
+- 'Note', utile a segnare appunti sul tuo esercizio.<br>
+- Lo storico peso aggiornabile ogni salvataggio.<br><br>
 Mi dispiace se i tuoi dati sono andati persi.<br>
-Nun ci scassare a minchia e allenati ❤️
+Nun ci scassare a minchia e allenati ❤️ ciao
 </div>
 
 <div class="container">
