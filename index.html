@@ -77,8 +77,7 @@ header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
 }
 .card:hover { transform: translateY(-2px); }
 
-/* pulsanti dentro esercizi e sezioni */
-.exercise .controls,
+/* pulsanti nelle sezioni: assoluti */
 .card.section .controls {
   position: absolute;
   bottom: 10px;
@@ -87,29 +86,35 @@ header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
   gap: 5px;
 }
 
-/* Media query mobile */
+/* pulsanti negli esercizi: in fondo alla card */
+.exercise .controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: auto; /* spinge i pulsanti in fondo */
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+}
+
+/* media query mobile */
 @media (max-width: 600px) {
-  .exercise .controls {
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    margin-top: 10px;
+  .exercise .controls,
+  .card.section .controls {
     position: static !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: flex-start !important;
+    margin-top: 8px;
   }
 
-  .exercise .controls button {
-    flex: 1 1 auto; /* si affiancano e riducono larghezza se serve */
+  .exercise .controls button,
+  .card.section .controls button {
+    flex: 1 1 auto;
     min-width: 50px;
   }
 }
 
-.exercise .controls,
-.card.section .controls {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  display: flex;
-  gap: 5px;
-}
 
 .weight-history, .reps-history, .time-display, .note-container { 
   font-size: 0.85rem; 
