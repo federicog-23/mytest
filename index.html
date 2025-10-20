@@ -20,7 +20,12 @@
   font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, Arial;
 }
 
-body { margin: 0; background: var(--bg); color: #111; }
+body {
+  margin: 0;
+  color: #111;
+  background: url('immagineapp.jpeg') no-repeat center center fixed;
+  background-size: cover;
+}
 
 header {
   text-align: center;
@@ -367,54 +372,36 @@ function loadData(){ return JSON.parse(localStorage.getItem(STORAGE_KEY)||"{}");
 function saveData(d){ localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); }
 
 function renderExercises(){
-  const data = loadData();
-  const day = daySelect.value;
-  dayTitle.textContent = day;
-  const exercises = data[day] || [];
-  exerciseContainer.innerHTML = "";
-
-  exercises.forEach((ex, index) => {
-    const div = document.createElement("div");
-
+  const data=loadData(); const day=daySelect.value;
+  dayTitle.textContent=day;
+  const exercises=data[day]||[];
+  exerciseContainer.innerHTML="";
+  exercises.forEach((ex,index)=>{
+    const div=document.createElement("div");
     if(ex.isSection){
       div.classList.add("card","section");
-      div.style.background="#d1ecf1"; 
-      div.style.borderLeft="5px solid #17a2b8";
-
-      // Titolo e pulsanti separati
-      div.innerHTML = `
-        <div class="section-title">📌 ${ex.sectionName}</div>
-        <div class="controls">
-          <button class="btn" onclick="editSection('${day}',${index})"><i class="fa fa-pencil"></i></button>
-          <button class="btn danger" onclick="deleteExercise('${day}',${index})"><i class="fa fa-trash"></i></button>
-          <button class="btn" onclick="moveUp('${day}',${index})"><i class="fa fa-arrow-up"></i></button>
-          <button class="btn" onclick="moveDown('${day}',${index})"><i class="fa fa-arrow-down"></i></button>
-        </div>`;
-      
-      exerciseContainer.appendChild(div);
-      return;
-    }
-
-    // Codice per gli esercizi rimane invariato
-    div.classList.add("card","exercise");
-    let infoHTML = `<strong>${ex.name}</strong>`;
-    if(ex.weightHistory?.length) infoHTML += `<div class="weight-history"><i class="fa fa-dumbbell"></i> ${ex.weightHistory.join(" → ")}</div>`;
-    if(ex.reps) infoHTML += `<div class="reps-history"><i class="fa fa-repeat"></i> ${ex.reps}</div>`;
-    if(ex.cardio) infoHTML += `<div class="time-display"><i class="fa fa-clock"></i> ${ex.cardio}</div>`;
-    if(ex.notes) infoHTML += `<div class="note-container"><i class="fa fa-sticky-note"></i> ${ex.notes}</div>`;
-
-    div.innerHTML = `<div class="info">${infoHTML}</div>
-      <div class="controls">
-        <button class="btn edit" onclick="editExercise('${day}',${index})"><i class="fa fa-pencil"></i></button>
+      div.style.background="#d1ecf1"; div.style.borderLeft="5px solid #17a2b8";
+      div.innerHTML=`<strong style="font-size:1.1rem;">📌 ${ex.sectionName}</strong><div class="controls">
+        <button class="btn" onclick="editSection('${day}',${index})"><i class="fa fa-pencil"></i></button>
         <button class="btn danger" onclick="deleteExercise('${day}',${index})"><i class="fa fa-trash"></i></button>
         <button class="btn" onclick="moveUp('${day}',${index})"><i class="fa fa-arrow-up"></i></button>
         <button class="btn" onclick="moveDown('${day}',${index})"><i class="fa fa-arrow-down"></i></button>
-      </div>`;
+      </div>`; exerciseContainer.appendChild(div); return; }
 
-    exerciseContainer.appendChild(div);
+    div.classList.add("card","exercise");
+    let infoHTML=`<strong>${ex.name}</strong>`;
+    if(ex.weightHistory?.length) infoHTML+=`<div class="weight-history"><i class="fa fa-dumbbell"></i> ${ex.weightHistory.join(" → ")}</div>`;
+    if(ex.reps) infoHTML+=`<div class="reps-history"><i class="fa fa-repeat"></i> ${ex.reps}</div>`;
+    if(ex.cardio) infoHTML+=`<div class="time-display"><i class="fa fa-clock"></i> ${ex.cardio}</div>`;
+    if(ex.notes) infoHTML+=`<div class="note-container"><i class="fa fa-sticky-note"></i> ${ex.notes}</div>`;
+    div.innerHTML=`<div class="info">${infoHTML}</div><div class="controls">
+      <button class="btn edit" onclick="editExercise('${day}',${index})"><i class="fa fa-pencil"></i></button>
+      <button class="btn danger" onclick="deleteExercise('${day}',${index})"><i class="fa fa-trash"></i></button>
+      <button class="btn" onclick="moveUp('${day}',${index})"><i class="fa fa-arrow-up"></i></button>
+      <button class="btn" onclick="moveDown('${day}',${index})"><i class="fa fa-arrow-down"></i></button>
+    </div>`; exerciseContainer.appendChild(div);
   });
 }
-
 
 addExerciseBtn.addEventListener("click",()=>{
   modalTitle.textContent="Aggiungi esercizio";
