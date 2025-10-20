@@ -87,46 +87,6 @@ header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
   gap: 5px;
 }
 
-/* media query per mobile */
-@media (max-width: 600px) {
-  .controls { 
-    flex-direction: column; 
-  } 
-
-  .exercise input { 
-    width: 60px; 
-    margin-bottom: 5px; 
-  } 
-
-  /* Pulsanti nelle card: statici e affiancati */
-  .exercise .controls,
-  .card.section .controls {
-    position: static !important;
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: wrap !important;
-    justify-content: flex-start !important;
-    margin-top: 8px;
-  }
-
-  .exercise .controls button,
-  .card.section .controls button {
-    flex: 1 1 auto; /* si affiancano e riducono larghezza se serve */
-    min-width: 50px;
-  }
-}
-
-
-/* Solo per le sezioni rimane assoluto */
-.card.section .controls {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  display: flex;
-  gap: 5px;
-}
-
-
 /* Media query mobile */
 @media (max-width: 600px) {
   .exercise .controls {
@@ -141,7 +101,6 @@ header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
     min-width: 50px;
   }
 }
-
 
 .exercise .controls,
 .card.section .controls {
