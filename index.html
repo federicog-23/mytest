@@ -138,6 +138,21 @@ header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
   .controls { flex-direction: column; } 
   .exercise input { width: 60px; margin-bottom: 5px; } 
 }
+
+@media (max-width: 600px) {
+  .controls {
+    flex-direction: column; /* mantiene verticale solo nei controlli globali */
+  }
+
+  /* ✅ Mantieni orizzontali i pulsanti dentro le card esercizio e sezione */
+  .exercise .controls,
+  .card.section .controls {
+    flex-direction: row !important;
+    flex-wrap: wrap;
+    justify-content: center; /* centrati orizzontalmente */
+  }
+}
+
 </style>
 </head>
 <body>
