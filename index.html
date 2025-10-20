@@ -77,7 +77,62 @@ header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
 }
 .card:hover { transform: translateY(-2px); }
 
-.exercise .info { margin-bottom: 8px; }
+.exercise {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: relative;
+}
+
+.exercise .controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+}
+
+/* Media query mobile */
+@media (max-width: 600px) {
+  .exercise .controls {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    position: static !important;
+  }
+
+  .exercise .controls button {
+    flex: 1 1 auto;
+    min-width: 50px;
+  }
+}
+
+/* Solo per le sezioni rimane assoluto */
+.card.section .controls {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  display: flex;
+  gap: 5px;
+}
+
+
+/* Media query mobile */
+@media (max-width: 600px) {
+  .exercise .controls {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    position: static !important;
+  }
+
+  .exercise .controls button {
+    flex: 1 1 auto; /* si affiancano e riducono larghezza se serve */
+    min-width: 50px;
+  }
+}
+
 
 .exercise .controls,
 .card.section .controls {
