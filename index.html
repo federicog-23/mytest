@@ -66,13 +66,46 @@ header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
 .btn.edit { background: var(--edit-color); color: white; }
 .btn:hover { opacity: 0.9; }
 
-.card { background: var(--card); padding: 15px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 12px; transition: transform 0.2s; position: relative; }
+.card { 
+  background: var(--card); 
+  padding: 15px; 
+  border-radius: 12px; 
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
+  margin-bottom: 12px; 
+  transition: transform 0.2s; 
+  position: relative; 
+}
 .card:hover { transform: translateY(-2px); }
 
 .exercise .info { margin-bottom: 8px; }
-.exercise .controls { position: absolute; top: 10px; right: 10px; display: flex; gap: 5px; }
 
-.weight-history, .reps-history, .time-display, .note-container { font-size: 0.85rem; margin-top: 3px; font-weight: 500; }
+/* 🔽 MODIFICA: pulsanti in basso a destra */
+.exercise .controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 20px;      /* spazio sopra i pulsanti */
+  padding-top: 10px;     /* separatore visivo */
+  border-top: 1px solid #eee; /* linea sottile */
+  position: relative;    /* non assoluta: non si sovrappone */
+}
+
+/* anche le sezioni avranno i tasti in basso a destra */
+.card.section .controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+  position: relative;
+}
+
+.weight-history, .reps-history, .time-display, .note-container { 
+  font-size: 0.85rem; 
+  margin-top: 3px; 
+  font-weight: 500; 
+}
 .weight-history { color: var(--weight-color); }
 .reps-history { color: var(--reps-color); }
 .time-display { color: var(--time-color); }
