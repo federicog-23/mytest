@@ -134,27 +134,42 @@ header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
 }
 .toast.show { opacity: 1; pointer-events: auto; }
 
+/* pulsanti dentro esercizi e sezioni */
+.exercise .controls,
+.card.section .controls {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  display: flex;
+  gap: 5px;
+}
+
 /* media query per mobile */
 @media (max-width: 600px) {
-  /* controlli globali fuori dalle card: verticali */
   .controls { 
     flex-direction: column; 
   } 
 
-  /* input negli esercizi */
   .exercise input { 
     width: 60px; 
     margin-bottom: 5px; 
   } 
 
-  /* pulsanti dentro le card: rimuove absolute e li mette orizzontali */
+  /* Pulsanti nelle card: statici e affiancati */
   .exercise .controls,
   .card.section .controls {
-    position: static; /* rimuove l'assoluto */
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    margin-top: 8px; /* distanza dal contenuto */
+    position: static !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: flex-start !important;
+    margin-top: 8px;
+  }
+
+  .exercise .controls button,
+  .card.section .controls button {
+    flex: 1 1 auto; /* si affiancano e riducono larghezza se serve */
+    min-width: 50px;
   }
 }
 
