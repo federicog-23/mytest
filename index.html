@@ -173,7 +173,6 @@ header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
   }
 }
 
-
 </style>
 </head>
 <body>
@@ -182,6 +181,18 @@ header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
   <h1>Allenamento 🏋️‍♂️</h1>
   <div id="timerBtn"><i class="fa fa-clock"></i></div>
 </header>
+
+<!-- Campo aggiornamenti -->
+<div id="updateBox" style="
+    background: #fff3cd; 
+    border: 1px solid #ffeeba; 
+    padding: 10px; 
+    border-radius: 8px; 
+    margin-bottom: 10px; 
+    font-size: 0.9rem;
+    color: #856404;">
+  <!-- Qui il contenuto verrà scritto dal codice -->
+</div>
 
 <div class="container">
   <div class="controls">
@@ -280,6 +291,9 @@ const stopTimerBtn = document.getElementById("stopTimerBtn");
 const resetTimerBtn = document.getElementById("resetTimerBtn");
 const timerDisplay = document.getElementById("timerDisplay");
 const quickTimerBtns = document.querySelectorAll(".quickTimerBtn");
+
+const updateBox = document.getElementById("updateBox");
+updateBox.innerHTML = "🔥 Aggiornamento: ora i pulsanti nelle card su mobile sono affiancati!";
 
 const daySelect = document.getElementById("daySelect");
 const dayTitle = document.getElementById("dayTitle");
