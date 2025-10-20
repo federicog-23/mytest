@@ -134,7 +134,8 @@ header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
 }
 .toast.show { opacity: 1; pointer-events: auto; }
 
-@media (max-width: 600px) { 
+/* media query per mobile */
+@media (max-width: 600px) {
   /* controlli globali fuori dalle card: verticali */
   .controls { 
     flex-direction: column; 
@@ -146,12 +147,14 @@ header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
     margin-bottom: 5px; 
   } 
 
-  /* pulsanti dentro le card esercizio e sezione: orizzontali */
+  /* pulsanti dentro le card: rimuove absolute e li mette orizzontali */
   .exercise .controls,
   .card.section .controls {
-    flex-direction: row !important;
+    position: static; /* rimuove l'assoluto */
+    flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center; /* centrati orizzontalmente */
+    justify-content: flex-start;
+    margin-top: 8px; /* distanza dal contenuto */
   }
 }
 
