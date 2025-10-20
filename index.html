@@ -39,6 +39,15 @@ header {
 header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
 @keyframes gradientAnimation { 0% {background-position: 0% 50%;} 50% {background-position: 100% 50%;} 100% {background-position: 0% 50%;} }
 
+.modal-content label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 10px;
+  margin-bottom: 4px;
+  color: #333;
+}
+
 #colorBtn, #timerBtn {
   position: absolute;
   top: 50%;
@@ -215,19 +224,30 @@ header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
 
 <!-- Modal per esercizio -->
 <div id="modal" class="modal hidden">
-  <div class="modal-content">
-    <h3 id="modalTitle">Aggiungi esercizio</h3>
-    <input type="text" id="newExerciseName" placeholder="Nome esercizio">
-    <input type="text" id="newExerciseWeight" placeholder="Peso">
-    <input type="text" id="newExerciseReps" placeholder="Ripetizioni">
-    <input type="text" id="newExerciseCardio" placeholder="Recupero/Tempo">
-    <textarea id="newExerciseNotes" placeholder="Note"></textarea>
-    <div class="modal-actions">
-      <button class="btn primary" id="saveExerciseBtn"><i class="fa fa-save"></i> Salva</button>
-      <button class="btn danger" id="closeModalBtn"><i class="fa fa-times"></i> Chiudi</button>
-    </div>
+ <div class="modal-content">
+  <h3 id="modalTitle">Aggiungi esercizio</h3>
+  
+  <label for="newExerciseName">Nome esercizio</label>
+  <input type="text" id="newExerciseName" placeholder="Nome esercizio">
+
+  <label for="newExerciseWeight">Peso</label>
+  <input type="text" id="newExerciseWeight" placeholder="Peso">
+
+  <label for="newExerciseReps">Ripetizioni</label>
+  <input type="text" id="newExerciseReps" placeholder="Ripetizioni">
+
+  <label for="newExerciseCardio">Recupero/Tempo</label>
+  <input type="text" id="newExerciseCardio" placeholder="Recupero/Tempo">
+
+  <label for="newExerciseNotes">Note</label>
+  <textarea id="newExerciseNotes" placeholder="Note"></textarea>
+
+  <div class="modal-actions">
+    <button class="btn primary" id="saveExerciseBtn"><i class="fa fa-save"></i> Salva</button>
+    <button class="btn danger" id="closeModalBtn"><i class="fa fa-times"></i> Chiudi</button>
   </div>
 </div>
+
 
 <!-- Modal colore -->
 <div id="colorModal" class="modal hidden">
@@ -293,7 +313,7 @@ const timerDisplay = document.getElementById("timerDisplay");
 const quickTimerBtns = document.querySelectorAll(".quickTimerBtn");
 
 const updateBox = document.getElementById("updateBox");
-updateBox.innerHTML = "🔔 Aggiornamento: Mi dispiace se i tuoi sono andati persi. In compenso, ci sono tante novità. Nun ci scassare a minchia ❤️";
+updateBox.innerHTML = "🔔 Aggiornamento:\n<br>- Cliccando in alto a sinistra sulla matita, puoi modificare il colore della barra superiore.<br>- Cliccando in alto a destra sul timer, puoi impostare il timer durante l'allenamento.<br>- 'Crea sezione' utile a distinguere i gruppi muscolari che dovrai fare.<br>- 'Note', in fase di creazione/modifica, utile a segnare appunti sul tuo esercizio.<br>- Se modifichi il peso e lo salvi, potrai vedere lo storico del peso.<br><br>Mi dispiace se i tuoi dati sono andati persi.<br>In compenso, ci sono tante novità.<br>Nun ci scassare a minchia e allenati❤️";
 
 const daySelect = document.getElementById("daySelect");
 const dayTitle = document.getElementById("dayTitle");
