@@ -20,12 +20,7 @@
   font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, Arial;
 }
 
-body {
-  margin: 0;
-  color: #111;
-  background: url('immagineapp.jpeg') no-repeat center center fixed;
-  background-size: cover;
-}
+body { margin: 0; background: var(--bg); color: #111; }
 
 header {
   text-align: center;
@@ -81,17 +76,6 @@ header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
   position: relative; 
 }
 .card:hover { transform: translateY(-2px); }
-
-/* --- Card Sezioni --- */
-.card.section {
-  display: flex;
-  align-items: center; /* centro verticale */
-  justify-content: center; /* centro orizzontale */
-  font-size: 1.3rem; /* aumenta la dimensione del testo */
-  text-align: center; /* centra testo multilinea */
-  padding: 20px; /* più spazio intorno al testo */
-}
-
 
 /* pulsanti nelle sezioni: assoluti */
 .card.section .controls {
