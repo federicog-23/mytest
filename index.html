@@ -106,14 +106,16 @@ header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
     flex-wrap: wrap !important;
     justify-content: flex-start !important;
     margin-top: 8px;
+    gap: 5px; /* ridotto per mobile */
   }
 
   .exercise .controls button,
   .card.section .controls button {
-    flex: 1 1 auto;
-    min-width: 50px;
+    flex: 0 1 auto; /* non si espandono troppo */
+    min-width: 0;   /* rimuove il vincolo */
   }
 }
+
 
 
 .weight-history, .reps-history, .time-display, .note-container { 
