@@ -77,13 +77,19 @@ header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
 }
 .card:hover { transform: translateY(-2px); }
 
-/* pulsanti nelle sezioni: assoluti */
+/* pulsanti nelle sezioni: piccoli e in alto a destra */
 .card.section .controls {
   position: absolute;
-  bottom: 10px;
-  right: 10px;
+  top: 10px;       /* posizione in alto */
+  right: 10px;     /* allineati a destra */
   display: flex;
-  gap: 5px;
+  gap: 4px;        /* distanza tra pulsanti più piccola */
+}
+
+/* riduce le icone dei pulsanti delle sezioni */
+.card.section .controls button {
+  padding: 4px 6px;
+  font-size: 0.75rem;  /* pulsanti più piccoli */
 }
 
 /* pulsanti negli esercizi: in fondo alla card */
@@ -106,20 +112,18 @@ header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
     flex-wrap: wrap !important;
     justify-content: flex-start !important;
     margin-top: 8px;
-    gap: 5px; /* ridotto per mobile */
+    gap: 5px;
   }
 
   .exercise .controls button,
   .card.section .controls button {
-    flex: 0 1 auto; /* non si espandono troppo */
-    min-width: 0;   /* rimuove il vincolo */
-  }
-
-    /* riduce le icone solo nelle sezioni */
-  .card.section .controls button i {
-    font-size: 0.75rem; /* icone più piccole */
+    flex: 0 1 auto;
+    min-width: 0;
+    font-size: 0.75rem;  /* icone più piccole anche su mobile */
+    padding: 4px 6px;
   }
 }
+
 
 
 
@@ -169,6 +173,8 @@ header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
   .exercise .controls button,
   .card.section .controls button { flex: 1 1 auto; min-width: 50px; }
 }
+
+
 </style>
 </head>
 <body>
@@ -186,7 +192,7 @@ header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
 - 'Note', utile a segnare appunti sul tuo esercizio.<br>
 - Lo storico peso aggiornabile ogni salvataggio.<br><br>
 Mi dispiace se i tuoi dati sono andati persi.<br>
-Nun ci scassare a minchia e allenati ❤️
+Nun ci scassare a minchia e allenati ❤️ ciao
 </div>
 
 <div class="container">
