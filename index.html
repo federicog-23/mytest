@@ -135,16 +135,18 @@ header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
 .toast.show { opacity: 1; pointer-events: auto; }
 
 @media (max-width: 600px) { 
-  .controls { flex-direction: column; } 
-  .exercise input { width: 60px; margin-bottom: 5px; } 
-}
+  /* controlli globali fuori dalle card: verticali */
+  .controls { 
+    flex-direction: column; 
+  } 
 
-@media (max-width: 600px) {
-  .controls {
-    flex-direction: column; /* mantiene verticale solo nei controlli globali */
-  }
+  /* input negli esercizi */
+  .exercise input { 
+    width: 60px; 
+    margin-bottom: 5px; 
+  } 
 
-  /* ✅ Mantieni orizzontali i pulsanti dentro le card esercizio e sezione */
+  /* pulsanti dentro le card esercizio e sezione: orizzontali */
   .exercise .controls,
   .card.section .controls {
     flex-direction: row !important;
@@ -152,6 +154,7 @@ header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
     justify-content: center; /* centrati orizzontalmente */
   }
 }
+
 
 </style>
 </head>
