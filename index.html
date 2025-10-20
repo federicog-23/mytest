@@ -39,15 +39,6 @@ header {
 header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
 @keyframes gradientAnimation { 0% {background-position: 0% 50%;} 50% {background-position: 100% 50%;} 100% {background-position: 0% 50%;} }
 
-.modal-content label {
-  display: block;
-  font-size: 0.85rem;
-  font-weight: 600;
-  margin-top: 10px;
-  margin-bottom: 4px;
-  color: #333;
-}
-
 #colorBtn, #timerBtn {
   position: absolute;
   top: 50%;
@@ -88,26 +79,13 @@ header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
 
 .exercise .info { margin-bottom: 8px; }
 
-/* 🔽 MODIFICA: pulsanti in basso a destra */
-.exercise .controls {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  margin-top: 20px;      /* spazio sopra i pulsanti */
-  padding-top: 10px;     /* separatore visivo */
-  border-top: 1px solid #eee; /* linea sottile */
-  position: relative;    /* non assoluta: non si sovrappone */
-}
-
-/* anche le sezioni avranno i tasti in basso a destra */
+.exercise .controls,
 .card.section .controls {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
   display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  margin-top: 15px;
-  padding-top: 10px;
-  border-top: 1px solid #eee;
-  position: relative;
+  gap: 5px;
 }
 
 .weight-history, .reps-history, .time-display, .note-container { 
@@ -143,45 +121,19 @@ header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
 }
 .toast.show { opacity: 1; pointer-events: auto; }
 
-/* pulsanti dentro esercizi e sezioni */
-.exercise .controls,
-.card.section .controls {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  display: flex;
-  gap: 5px;
-}
-
-/* media query per mobile */
 @media (max-width: 600px) {
-  .controls { 
-    flex-direction: column; 
-  } 
-
-  .exercise input { 
-    width: 60px; 
-    margin-bottom: 5px; 
-  } 
-
-  /* Pulsanti nelle card: statici e affiancati */
+  .controls { flex-direction: column; } 
+  .exercise input { width: 60px; margin-bottom: 5px; } 
   .exercise .controls,
   .card.section .controls {
     position: static !important;
-    display: flex !important;
-    flex-direction: row !important;
     flex-wrap: wrap !important;
     justify-content: flex-start !important;
     margin-top: 8px;
   }
-
   .exercise .controls button,
-  .card.section .controls button {
-    flex: 1 1 auto; /* si affiancano e riducono larghezza se serve */
-    min-width: 50px;
-  }
+  .card.section .controls button { flex: 1 1 auto; min-width: 50px; }
 }
-
 </style>
 </head>
 <body>
@@ -191,28 +143,27 @@ header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
   <div id="timerBtn"><i class="fa fa-clock"></i></div>
 </header>
 
-<!-- Campo aggiornamenti -->
-<div id="updateBox" style="
-    background: #fff3cd; 
-    border: 1px solid #ffeeba; 
-    padding: 10px; 
-    border-radius: 8px; 
-    margin-bottom: 10px; 
-    font-size: 0.9rem;
-    color: #856404;">
-  <!-- Qui il contenuto verrà scritto dal codice -->
+<div id="updateBox" style="background:#fff3cd;border:1px solid #ffeeba;padding:10px;border-radius:8px;margin-bottom:10px;font-size:0.9rem;color:#856404;">
+🔔 Aggiornamento:<br>
+- Cliccando in alto a sinistra sulla matita, puoi modificare il colore della barra superiore.<br>
+- Cliccando in alto a destra sul timer, puoi impostare il timer durante l'allenamento.<br>
+- 'Crea sezione' utile a distinguere i gruppi muscolari.<br>
+- 'Note', utile a segnare appunti sul tuo esercizio.<br>
+- Lo storico peso aggiornabile ogni salvataggio.<br><br>
+Mi dispiace se i tuoi dati sono andati persi.<br>
+Nun ci scassare a minchia e allenati ❤️
 </div>
 
 <div class="container">
   <div class="controls">
     <select id="daySelect">
-      <option value="Lunedì">Lunedì</option>
-      <option value="Martedì">Martedì</option>
-      <option value="Mercoledì">Mercoledì</option>
-      <option value="Giovedì">Giovedì</option>
-      <option value="Venerdì">Venerdì</option>
-      <option value="Sabato">Sabato</option>
-      <option value="Domenica">Domenica</option>
+      <option>Lunedì</option>
+      <option>Martedì</option>
+      <option>Mercoledì</option>
+      <option>Giovedì</option>
+      <option>Venerdì</option>
+      <option>Sabato</option>
+      <option>Domenica</option>
     </select>
     <button class="btn primary" id="addExerciseBtn"><i class="fa fa-plus"></i> Aggiungi esercizio</button>
     <button class="btn primary" id="addSectionBtn"><i class="fa fa-folder-plus"></i> Crea sezione</button>
@@ -222,34 +173,23 @@ header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
   <div id="exerciseContainer"></div>
 </div>
 
-<!-- Modal per esercizio -->
+<!-- Modal Esercizio -->
 <div id="modal" class="modal hidden">
  <div class="modal-content">
   <h3 id="modalTitle">Aggiungi esercizio</h3>
-  
-  <label for="newExerciseName">Nome esercizio</label>
-  <input type="text" id="newExerciseName" placeholder="Nome esercizio">
-
-  <label for="newExerciseWeight">Peso</label>
-  <input type="text" id="newExerciseWeight" placeholder="Peso">
-
-  <label for="newExerciseReps">Ripetizioni</label>
-  <input type="text" id="newExerciseReps" placeholder="Ripetizioni">
-
-  <label for="newExerciseCardio">Recupero/Tempo</label>
-  <input type="text" id="newExerciseCardio" placeholder="Recupero/Tempo">
-
-  <label for="newExerciseNotes">Note</label>
-  <textarea id="newExerciseNotes" placeholder="Note"></textarea>
-
+  <label>Nome esercizio</label><input id="newExerciseName" type="text">
+  <label>Peso</label><input id="newExerciseWeight" type="text">
+  <label>Ripetizioni</label><input id="newExerciseReps" type="text">
+  <label>Recupero/Tempo</label><input id="newExerciseCardio" type="text">
+  <label>Note</label><textarea id="newExerciseNotes"></textarea>
   <div class="modal-actions">
-    <button class="btn primary" id="saveExerciseBtn"><i class="fa fa-save"></i> Salva</button>
-    <button class="btn danger" id="closeModalBtn"><i class="fa fa-times"></i> Chiudi</button>
+    <button class="btn primary" id="saveExerciseBtn">Salva</button>
+    <button class="btn danger" id="closeModalBtn">Chiudi</button>
   </div>
+ </div>
 </div>
 
-
-<!-- Modal colore -->
+<!-- Modal Colore -->
 <div id="colorModal" class="modal hidden">
   <div class="modal-content">
     <h3>Scegli colore header</h3>
@@ -264,12 +204,12 @@ header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
     </select>
     <div class="modal-actions">
       <button class="btn primary" id="applyColorBtn">Applica</button>
-      <button class="btn danger" id="closeColorModal"><i class="fa fa-times"></i> Chiudi</button>
+      <button class="btn danger" id="closeColorModal">Chiudi</button>
     </div>
   </div>
 </div>
 
-<!-- Modal timer -->
+<!-- Modal Timer -->
 <div id="timerModal" class="modal hidden">
   <div class="modal-content">
     <h3>Timer</h3>
@@ -282,10 +222,10 @@ header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
       <button class="btn primary quickTimerBtn" data-ms="120000">2 min</button>
     </div>
     <div class="modal-actions" style="margin-top:10px;">
-      <button class="btn primary" id="startTimerBtn"><i class="fa fa-play"></i> Avvia</button>
-      <button class="btn danger" id="stopTimerBtn"><i class="fa fa-pause"></i> Ferma</button>
-      <button class="btn edit" id="resetTimerBtn"><i class="fa fa-undo"></i> Reset</button>
-      <button class="btn danger" id="closeTimerModal"><i class="fa fa-times"></i> Chiudi</button>
+      <button class="btn primary" id="startTimerBtn">Avvia</button>
+      <button class="btn danger" id="stopTimerBtn">Ferma</button>
+      <button class="btn edit" id="resetTimerBtn">Reset</button>
+      <button class="btn danger" id="closeTimerModal">Chiudi</button>
     </div>
     <div style="margin-top:10px; font-size:1.2rem;" id="timerDisplay">00:00.00</div>
   </div>
@@ -294,13 +234,26 @@ header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
 <div id="toast" class="toast"></div>
 
 <script>
+// --- COLORI ---
 const header = document.querySelector("header");
 const colorBtn = document.getElementById("colorBtn");
 const colorModal = document.getElementById("colorModal");
 const colorSelect = document.getElementById("colorSelect");
 const applyColorBtn = document.getElementById("applyColorBtn");
 const closeColorModal = document.getElementById("closeColorModal");
+const savedColor = localStorage.getItem("headerColor");
+if(savedColor){ header.style.background = savedColor; colorBtn.style.background = savedColor; }
 
+colorBtn.addEventListener("click", ()=>colorModal.classList.remove("hidden"));
+closeColorModal.addEventListener("click", ()=>colorModal.classList.add("hidden"));
+applyColorBtn.addEventListener("click", ()=>{
+  const val = colorSelect.value;
+  header.style.background = val; colorBtn.style.background = val;
+  localStorage.setItem("headerColor", val);
+  colorModal.classList.add("hidden");
+});
+
+// --- TIMER ---
 const timerBtn = document.getElementById("timerBtn");
 const timerModal = document.getElementById("timerModal");
 const closeTimerModal = document.getElementById("closeTimerModal");
@@ -311,285 +264,139 @@ const stopTimerBtn = document.getElementById("stopTimerBtn");
 const resetTimerBtn = document.getElementById("resetTimerBtn");
 const timerDisplay = document.getElementById("timerDisplay");
 const quickTimerBtns = document.querySelectorAll(".quickTimerBtn");
+let timerInterval=null,totalMilliseconds=0;
 
-const updateBox = document.getElementById("updateBox");
-updateBox.innerHTML = "🔔 Aggiornamento:\n<br>- Cliccando in alto a sinistra sulla matita, puoi modificare il colore della barra superiore.<br>- Cliccando in alto a destra sul timer, puoi impostare il timer durante l'allenamento.<br>- 'Crea sezione' utile a distinguere i gruppi muscolari che dovrai fare.<br>- 'Note', in fase di creazione/modifica, utile a segnare appunti sul tuo esercizio.<br>- Se modifichi il peso e lo salvi, potrai vedere lo storico del peso.<br><br>Mi dispiace se i tuoi dati sono andati persi.<br>In compenso, ci sono tante novità.<br>Nun ci scassare a minchia e allenati❤️";
-
-const daySelect = document.getElementById("daySelect");
-const dayTitle = document.getElementById("dayTitle");
-const exerciseContainer = document.getElementById("exerciseContainer");
-const addExerciseBtn = document.getElementById("addExerciseBtn");
-const addSectionBtn = document.getElementById("addSectionBtn");
-const modal = document.getElementById("modal");
-const saveExerciseBtn = document.getElementById("saveExerciseBtn");
-const closeModalBtn = document.getElementById("closeModalBtn");
-const newExerciseName = document.getElementById("newExerciseName");
-const newExerciseWeight = document.getElementById("newExerciseWeight");
-const newExerciseReps = document.getElementById("newExerciseReps");
-const newExerciseCardio = document.getElementById("newExerciseCardio");
-const newExerciseNotes = document.getElementById("newExerciseNotes");
-const modalTitle = document.getElementById("modalTitle");
-const toast = document.getElementById("toast");
-
-let editIndex = null; 
-const STORAGE_KEY = "gym_notes_premium";
-
-let timerInterval = null;
-let totalMilliseconds = 0;
-
-// Imposta colore header salvato
-const savedColor = localStorage.getItem("headerColor");
-if (savedColor) header.style.background = savedColor;
-colorBtn.style.background = savedColor || "#000";
-
-// Mostra modale colori
-colorBtn.addEventListener("click", () => colorModal.classList.remove("hidden"));
-closeColorModal.addEventListener("click", () => colorModal.classList.add("hidden"));
-applyColorBtn.addEventListener("click", () => {
-  const selectedColor = colorSelect.value;
-  header.style.background = selectedColor;
-  colorBtn.style.background = selectedColor;
-  localStorage.setItem("headerColor", selectedColor);
-  colorModal.classList.add("hidden");
-});
-
-// Timer modal
-timerBtn.addEventListener("click", () => timerModal.classList.remove("hidden"));
-closeTimerModal.addEventListener("click", () => {
+timerBtn.addEventListener("click", ()=>timerModal.classList.remove("hidden"));
+closeTimerModal.addEventListener("click", ()=>{
   timerModal.classList.add("hidden");
-  clearInterval(timerInterval);
-  totalMilliseconds = 0;
-  updateTimerDisplay();
+  clearInterval(timerInterval); totalMilliseconds=0; updateTimerDisplay();
 });
-
-function updateTimerDisplay() {
-  const minutes = Math.floor(totalMilliseconds / 60000);
-  const seconds = Math.floor((totalMilliseconds % 60000) / 1000);
-  const centiseconds = Math.floor((totalMilliseconds % 1000) / 10);
-  timerDisplay.textContent = 
-    `${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}.${String(centiseconds).padStart(2,'0')}`;
+function updateTimerDisplay(){
+  const m=Math.floor(totalMilliseconds/60000);
+  const s=Math.floor((totalMilliseconds%60000)/1000);
+  const cs=Math.floor((totalMilliseconds%1000)/10);
+  timerDisplay.textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}.${String(cs).padStart(2,'0')}`;
 }
-
-startTimerBtn.addEventListener("click", () => {
-  const minutes = parseInt(timerMinutes.value) || 0;
-  const seconds = parseInt(timerSeconds.value) || 0;
-  totalMilliseconds = minutes*60000 + seconds*1000;
-  startInterval();
+startTimerBtn.addEventListener("click", ()=>{
+  const m=parseInt(timerMinutes.value)||0,s=parseInt(timerSeconds.value)||0;
+  totalMilliseconds=m*60000+s*1000; startInterval();
 });
-
-stopTimerBtn.addEventListener("click", () => clearInterval(timerInterval));
-
-resetTimerBtn.addEventListener("click", () => {
-  clearInterval(timerInterval);
-  totalMilliseconds = 0;
-  updateTimerDisplay();
-  showToast("Timer resettato!");
-});
-
-quickTimerBtns.forEach(btn => {
-  btn.addEventListener("click", () => {
-    totalMilliseconds = parseInt(btn.dataset.ms);
-    startInterval();
-  });
-});
-
-function startInterval() {
+stopTimerBtn.addEventListener("click", ()=>clearInterval(timerInterval));
+resetTimerBtn.addEventListener("click", ()=>{ clearInterval(timerInterval); totalMilliseconds=0; updateTimerDisplay(); showToast("Timer resettato!"); });
+quickTimerBtns.forEach(b=>b.addEventListener("click",()=>{ totalMilliseconds=parseInt(b.dataset.ms); startInterval(); }));
+function startInterval(){
   clearInterval(timerInterval);
   updateTimerDisplay();
-  timerInterval = setInterval(() => {
-    if (totalMilliseconds <= 0) {
-      clearInterval(timerInterval);
-      showToast("Timer terminato!");
-      return;
-    }
-    totalMilliseconds -= 10;
-    updateTimerDisplay();
-  }, 10);
+  timerInterval=setInterval(()=>{
+    if(totalMilliseconds<=0){ clearInterval(timerInterval); showToast("Timer terminato!"); return; }
+    totalMilliseconds-=10; updateTimerDisplay();
+  },10);
 }
 
-// Toast
-function showToast(message) {
-  toast.textContent = message;
-  toast.classList.add("show");
-  setTimeout(() => toast.classList.remove("show"), 2000);
-}
+// --- TOAST ---
+const toast=document.getElementById("toast");
+function showToast(msg){ toast.textContent=msg; toast.classList.add("show"); setTimeout(()=>toast.classList.remove("show"),2000); }
 
-// Funzioni gestione dati
-function loadData() { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
-function saveData(data) { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
+// --- DATI E ESECUZIONE ---
+const STORAGE_KEY="gym_notes_premium";
+const daySelect=document.getElementById("daySelect");
+const dayTitle=document.getElementById("dayTitle");
+const exerciseContainer=document.getElementById("exerciseContainer");
+const addExerciseBtn=document.getElementById("addExerciseBtn");
+const addSectionBtn=document.getElementById("addSectionBtn");
+const modal=document.getElementById("modal");
+const saveExerciseBtn=document.getElementById("saveExerciseBtn");
+const closeModalBtn=document.getElementById("closeModalBtn");
+const newExerciseName=document.getElementById("newExerciseName");
+const newExerciseWeight=document.getElementById("newExerciseWeight");
+const newExerciseReps=document.getElementById("newExerciseReps");
+const newExerciseCardio=document.getElementById("newExerciseCardio");
+const newExerciseNotes=document.getElementById("newExerciseNotes");
+const modalTitle=document.getElementById("modalTitle");
+let editIndex=null;
 
-function renderExercises() {
-  const data = loadData();
-  const day = daySelect.value;
-  dayTitle.textContent = day;
-  const exercises = data[day] || [];
-  exerciseContainer.innerHTML = "";
+function loadData(){ return JSON.parse(localStorage.getItem(STORAGE_KEY)||"{}"); }
+function saveData(d){ localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); }
 
-  exercises.forEach((ex, index) => {
-    const div = document.createElement("div");
+function renderExercises(){
+  const data=loadData(); const day=daySelect.value;
+  dayTitle.textContent=day;
+  const exercises=data[day]||[];
+  exerciseContainer.innerHTML="";
+  exercises.forEach((ex,index)=>{
+    const div=document.createElement("div");
+    if(ex.isSection){
+      div.classList.add("card","section");
+      div.style.background="#d1ecf1"; div.style.borderLeft="5px solid #17a2b8";
+      div.innerHTML=`<strong style="font-size:1.1rem;">📌 ${ex.sectionName}</strong><div class="controls">
+        <button class="btn" onclick="editSection('${day}',${index})"><i class="fa fa-pencil"></i></button>
+        <button class="btn danger" onclick="deleteExercise('${day}',${index})"><i class="fa fa-trash"></i></button>
+        <button class="btn" onclick="moveUp('${day}',${index})"><i class="fa fa-arrow-up"></i></button>
+        <button class="btn" onclick="moveDown('${day}',${index})"><i class="fa fa-arrow-down"></i></button>
+      </div>`; exerciseContainer.appendChild(div); return; }
 
-    if (ex.isSection) {
-      div.classList.add("card");
-      div.style.background = "#d1ecf1";
-      div.style.borderLeft = "5px solid #17a2b8";
-
-      let controlsHTML = `
-        <button class="btn" onclick="editSection('${day}', ${index})"><i class="fa fa-pencil"></i></button>
-        <button class="btn danger" onclick="deleteExercise('${day}', ${index})"><i class="fa fa-trash"></i></button>
-        <button class="btn" onclick="moveUp('${day}', ${index})"><i class="fa fa-arrow-up"></i></button>
-        <button class="btn" onclick="moveDown('${day}', ${index})"><i class="fa fa-arrow-down"></i></button>
-      `;
-
-      div.innerHTML = `<strong style="font-size:1.1rem;">📌 ${ex.sectionName}</strong><div style="float:right;">${controlsHTML}</div>`;
-      exerciseContainer.appendChild(div);
-      return;
-    }
-
-    div.classList.add("card", "exercise");
-
-    let infoHTML = `<strong>${ex.name}</strong>`;
-    if (ex.weightHistory?.length) infoHTML += `<div class="weight-history"><i class="fa fa-dumbbell"></i> ${ex.weightHistory.join(" → ")}</div>`;
-    if (ex.reps) infoHTML += `<div class="reps-history"><i class="fa fa-repeat"></i> ${ex.reps}</div>`;
-    if (ex.cardio) infoHTML += `<div class="time-display"><i class="fa fa-clock"></i> ${ex.cardio}</div>`;
-    if (ex.notes) infoHTML += `<div class="note-container"><i class="fa fa-sticky-note"></i> ${ex.notes}</div>`;
-
-    let controlsHTML = `
-      <button class="btn edit" onclick="editExercise('${day}', ${index})"><i class="fa fa-pencil"></i></button>
-      <button class="btn danger" onclick="deleteExercise('${day}', ${index})"><i class="fa fa-trash"></i></button>
-      <button class="btn" onclick="moveUp('${day}', ${index})"><i class="fa fa-arrow-up"></i></button>
-      <button class="btn" onclick="moveDown('${day}', ${index})"><i class="fa fa-arrow-down"></i></button>
-    `;
-
-    div.innerHTML = `<div class="info">${infoHTML}</div><div class="controls">${controlsHTML}</div>`;
-    exerciseContainer.appendChild(div);
+    div.classList.add("card","exercise");
+    let infoHTML=`<strong>${ex.name}</strong>`;
+    if(ex.weightHistory?.length) infoHTML+=`<div class="weight-history"><i class="fa fa-dumbbell"></i> ${ex.weightHistory.join(" → ")}</div>`;
+    if(ex.reps) infoHTML+=`<div class="reps-history"><i class="fa fa-repeat"></i> ${ex.reps}</div>`;
+    if(ex.cardio) infoHTML+=`<div class="time-display"><i class="fa fa-clock"></i> ${ex.cardio}</div>`;
+    if(ex.notes) infoHTML+=`<div class="note-container"><i class="fa fa-sticky-note"></i> ${ex.notes}</div>`;
+    div.innerHTML=`<div class="info">${infoHTML}</div><div class="controls">
+      <button class="btn edit" onclick="editExercise('${day}',${index})"><i class="fa fa-pencil"></i></button>
+      <button class="btn danger" onclick="deleteExercise('${day}',${index})"><i class="fa fa-trash"></i></button>
+      <button class="btn" onclick="moveUp('${day}',${index})"><i class="fa fa-arrow-up"></i></button>
+      <button class="btn" onclick="moveDown('${day}',${index})"><i class="fa fa-arrow-down"></i></button>
+    </div>`; exerciseContainer.appendChild(div);
   });
 }
 
-// Eventi aggiungi/modifica esercizi e sezioni
-addExerciseBtn.addEventListener("click", () => {
-  modalTitle.textContent = "Aggiungi esercizio";
-  newExerciseName.value = "";
-  newExerciseWeight.value = "";
-  newExerciseReps.value = "";
-  newExerciseCardio.value = "";
-  newExerciseNotes.value = "";
-  saveExerciseBtn.textContent = "Salva";
-  saveExerciseBtn.classList.add("primary");
-  saveExerciseBtn.classList.remove("edit");
-  editIndex = null;
-  modal.classList.remove("hidden");
+addExerciseBtn.addEventListener("click",()=>{
+  modalTitle.textContent="Aggiungi esercizio";
+  newExerciseName.value=newExerciseWeight.value=newExerciseReps.value=newExerciseCardio.value=newExerciseNotes.value="";
+  saveExerciseBtn.textContent="Salva"; saveExerciseBtn.classList.add("primary"); saveExerciseBtn.classList.remove("edit");
+  editIndex=null; modal.classList.remove("hidden");
 });
 
-saveExerciseBtn.addEventListener("click", () => {
-  const name = newExerciseName.value.trim();
-  const weight = newExerciseWeight.value.trim();
-  const reps = newExerciseReps.value.trim();
-  const cardio = newExerciseCardio.value.trim();
-  const notes = newExerciseNotes.value.trim();
-  if (!name) return alert("Inserisci un nome.");
-
-  const data = loadData();
-  const day = daySelect.value;
-  if (!data[day]) data[day] = [];
-
-  if (editIndex !== null) {
-    const ex = data[day][editIndex];
-    ex.name = name;
-    if (weight) {
-      if (!ex.weightHistory) ex.weightHistory = [];
-      const lastWeight = ex.weightHistory[ex.weightHistory.length - 1];
-      if (lastWeight !== weight) ex.weightHistory.push(weight);
-    }
-    ex.reps = reps || null;
-    ex.cardio = cardio || null;
-    ex.notes = notes || null;
+saveExerciseBtn.addEventListener("click",()=>{
+  const name=newExerciseName.value.trim(), weight=newExerciseWeight.value.trim(), reps=newExerciseReps.value.trim(), cardio=newExerciseCardio.value.trim(), notes=newExerciseNotes.value.trim();
+  if(!name)return alert("Inserisci un nome.");
+  const data=loadData(); const day=daySelect.value; if(!data[day]) data[day]=[];
+  if(editIndex!==null){
+    const ex=data[day][editIndex]; ex.name=name;
+    if(weight){ if(!ex.weightHistory) ex.weightHistory=[]; const last=ex.weightHistory[ex.weightHistory.length-1]; if(last!==weight) ex.weightHistory.push(weight);}
+    ex.reps=reps||null; ex.cardio=cardio||null; ex.notes=notes||null;
     showToast("Esercizio aggiornato!");
-  } else {
-    data[day].push({ 
-      name, 
-      weightHistory: weight ? [weight] : [], 
-      reps: reps || null, 
-      cardio: cardio || null,
-      notes: notes || null
-    });
+  }else{
+    data[day].push({name, weightHistory: weight?[weight]:[], reps: reps||null, cardio: cardio||null, notes: notes||null});
     showToast("Esercizio aggiunto!");
   }
-
-  saveData(data);
-  modal.classList.add("hidden");
-  renderExercises();
+  saveData(data); modal.classList.add("hidden"); renderExercises();
 });
 
-function editExercise(day, index) {
-  const data = loadData();
-  const ex = data[day][index];
-  newExerciseName.value = ex.name;
-  newExerciseWeight.value = ex.weightHistory?.[ex.weightHistory.length - 1] || "";
-  newExerciseReps.value = ex.reps || "";
-  newExerciseCardio.value = ex.cardio || "";
-  newExerciseNotes.value = ex.notes || "";
-  modalTitle.textContent = "Modifica esercizio";
-  saveExerciseBtn.textContent = "Aggiorna";
-  saveExerciseBtn.classList.remove("primary");
-  saveExerciseBtn.classList.add("edit");
-  editIndex = index;
-  modal.classList.remove("hidden");
+function editExercise(day,index){
+  const data=loadData(); const ex=data[day][index];
+  newExerciseName.value=ex.name;
+  newExerciseWeight.value=ex.weightHistory?.[ex.weightHistory.length-1]||"";
+  newExerciseReps.value=ex.reps||""; newExerciseCardio.value=ex.cardio||""; newExerciseNotes.value=ex.notes||"";
+  modalTitle.textContent="Modifica esercizio"; saveExerciseBtn.textContent="Aggiorna";
+  saveExerciseBtn.classList.remove("primary"); saveExerciseBtn.classList.add("edit");
+  editIndex=index; modal.classList.remove("hidden");
 }
 
-closeModalBtn.addEventListener("click", () => modal.classList.add("hidden"));
+closeModalBtn.addEventListener("click",()=>modal.classList.add("hidden"));
 
-addSectionBtn.addEventListener("click", () => {
-  const sectionName = prompt("Nome sezione (gruppo muscolare):");
-  if (!sectionName || sectionName.trim() === "") return;
-  const data = loadData();
-  const day = daySelect.value;
-  if (!data[day]) data[day] = [];
-  data[day].push({ isSection: true, sectionName: sectionName.trim() });
-  saveData(data);
-  renderExercises();
-  showToast("Sezione aggiunta!");
+addSectionBtn.addEventListener("click",()=>{
+  const name=prompt("Nome sezione:"); if(!name||name.trim()==="")return;
+  const data=loadData(); const day=daySelect.value; if(!data[day])data[day]=[];
+  data[day].push({isSection:true, sectionName:name.trim()}); saveData(data); renderExercises(); showToast("Sezione aggiunta!");
 });
 
-function editSection(day, index) {
-  const data = loadData();
-  const ex = data[day][index];
-  const newName = prompt("Rinomina sezione:", ex.sectionName);
-  if (newName && newName.trim() !== "") {
-    ex.sectionName = newName.trim();
-    saveData(data);
-    renderExercises();
-    showToast("Sezione aggiornata!");
-  }
-}
+function editSection(day,index){ const data=loadData(); const ex=data[day][index]; const newName=prompt("Rinomina sezione:",ex.sectionName); if(newName&&newName.trim()!==""){ ex.sectionName=newName.trim(); saveData(data); renderExercises(); showToast("Sezione aggiornata!"); } }
+function deleteExercise(day,index){ if(!confirm("Vuoi eliminare questo elemento?"))return; const data=loadData(); data[day].splice(index,1); saveData(data); renderExercises(); showToast("Elemento eliminato!"); }
+function moveUp(day,index){ if(index===0)return; const data=loadData(); [data[day][index-1],data[day][index]]=[data[day][index],data[day][index-1]]; saveData(data); renderExercises(); }
+function moveDown(day,index){ const data=loadData(); if(index===data[day].length-1)return; [data[day][index+1],data[day][index]]=[data[day][index],data[day][index+1]]; saveData(data); renderExercises(); }
 
-function deleteExercise(day, index) {
-  if (!confirm("Vuoi eliminare questo elemento?")) return;
-  const data = loadData();
-  data[day].splice(index, 1);
-  saveData(data);
-  renderExercises();
-  showToast("Elemento eliminato!");
-}
-
-function moveUp(day, index) {
-  if (index === 0) return;
-  const data = loadData();
-  const arr = data[day];
-  [arr[index-1], arr[index]] = [arr[index], arr[index-1]];
-  saveData(data);
-  renderExercises();
-}
-
-function moveDown(day, index) {
-  const data = loadData();
-  const arr = data[day];
-  if (index === arr.length-1) return;
-  [arr[index+1], arr[index]] = [arr[index], arr[index+1]];
-  saveData(data);
-  renderExercises();
-}
-
-daySelect.addEventListener("change", renderExercises);
+daySelect.addEventListener("change",renderExercises);
 renderExercises();
 </script>
 </body>
